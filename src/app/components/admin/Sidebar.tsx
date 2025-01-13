@@ -1,11 +1,14 @@
+// app/admin/components/Sidebar.tsx
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FileText, PenTool, BarChart2 } from 'lucide-react';
+import { SidebarItem } from '../../types/dbtypes';
+import { JSX } from 'react';
 
-export default function Sidebar() {
+export default function Sidebar(): JSX.Element {
   const pathname = usePathname();
 
-  const navigation = [
+  const navigation: SidebarItem[] = [
     { name: 'Dashboard', href: '/admin', icon: BarChart2 },
     { name: 'Manage Articles', href: '/admin/articles', icon: FileText },
     { name: 'Generate Content', href: '/admin/generate', icon: PenTool },

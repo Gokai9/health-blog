@@ -1,11 +1,12 @@
-
-// app/admin/page.js
-import { getCollection } from '@/app/lib/db';
+// app/admin/page.tsx
+import { getCollection } from '../lib/mongodb';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Users, FileText, TrendingUp } from 'lucide-react';
+import { FileText, TrendingUp } from 'lucide-react';
+import { Article, DashboardStats } from '../types';
+import { JSX } from 'react';
 
-async function getStats() {
-  const articles = await getCollection('articles');
+async function getStats(): Promise<DashboardStats> {
+  const articles = await getCollection<Article>('articles');
   const totalArticles = await articles.countDocuments();
   const publishedArticles = await articles.countDocuments({ status: 'published' });
   const draftArticles = await articles.countDocuments({ status: 'draft' });
@@ -17,7 +18,7 @@ async function getStats() {
   };
 }
 
-export default async function AdminDashboard() {
+export default async function AdminDashboard(): Promise<JSX.Element> {
   const stats = await getStats();
 
   return (
@@ -55,8 +56,6 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
-
-      {/* Recent Articles Table will be added here */}
     </div>
   );
 }

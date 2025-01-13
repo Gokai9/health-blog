@@ -1,13 +1,17 @@
-// app/admin/layout.js
-import { Inter } from 'next/font/google';
+// app/admin/layout.tsx
+//import { Inter } from 'next/font/google';
 import Sidebar from '../components/admin/Sidebar';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/[...nextauth]/route';
 
-const inter = Inter({ subsets: ['latin'] });
+//const inter = Inter({ subsets: ['latin'] });
 
-export default async function AdminLayout({ children }) {
+interface AdminLayoutProps {
+  children: React.ReactNode;
+}
+
+export default async function AdminLayout({ children }: AdminLayoutProps) {
   const session = await getServerSession(authOptions);
   
   if (!session) {
@@ -26,4 +30,3 @@ export default async function AdminLayout({ children }) {
   );
 }
 
-// app/admin/components/Sidebar.js
