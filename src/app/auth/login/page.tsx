@@ -1,7 +1,7 @@
 // app/auth/login/page.tsx
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 
-interface LoginFormData {
+interface FormData {
   email: string;
   password: string;
 }
@@ -20,14 +20,14 @@ export default function LoginPage() {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/admin';
   
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
-  const [formData, setFormData] = useState<LoginFormData>({
+  const [formData, setFormData] = useState<FormData>({
     email: '',
     password: ''
   });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
@@ -44,7 +44,8 @@ export default function LoginPage() {
       } else {
         router.push(callbackUrl);
       }
-    } catch (err) {
+      //err
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);

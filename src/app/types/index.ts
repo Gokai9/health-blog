@@ -80,4 +80,4 @@ export interface DashboardStats {
   totalArticles: number;
   publishedArticles: number;
   draftArticles: number;
-}
+} 
