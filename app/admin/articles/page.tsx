@@ -7,9 +7,15 @@ import { Plus } from 'lucide-react';
 import { Article } from '@/types';
 import { articlesSchema } from '../../db/schema';
 
+/**
+ * Fetches a list of articles from the database, sorts them by their updated date in descending order,
+ * and returns the sorted list.
+ *
+ * @returns {Promise<Article[]>} A promise that resolves to an array of articles sorted by their updated date.
+ */
 async function getArticles(): Promise<Article[]> {
   const articles: Article[] = await db.select().from(articlesSchema);
-  return articles.find({}).sort({ updatedAt: -1 }).toArray();
+  return articles.sort((a, b) => (b.updatedAt?.getTime() || 0) - (a.updatedAt?.getTime() || 0));
 }
 
 export default async function ArticlesPage() {
@@ -19,7 +25,7 @@ export default async function ArticlesPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Articles</h1>
-        <Button onClick={() => window.location.href = '/admin/articles/new'}>
+        <Button onClick={() => window.location.href = '/admin/generate'}>
           <Plus className="mr-2 h-4 w-4" /> New Article
         </Button>
       </div>

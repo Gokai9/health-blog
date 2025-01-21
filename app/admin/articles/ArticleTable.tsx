@@ -34,7 +34,7 @@ const ArticleTable: FC<ArticleTableProps> = ({ articles, onEdit, onDelete }) => 
         </TableHeader>
         <TableBody>
           {articles.map((article) => (
-            <TableRow key={article._id}>
+            <TableRow key={article.id}>
               <TableCell className="font-medium">{article.title}</TableCell>
               <TableCell>
                 <Badge
@@ -44,7 +44,7 @@ const ArticleTable: FC<ArticleTableProps> = ({ articles, onEdit, onDelete }) => 
                 </Badge>
               </TableCell>
               <TableCell>
-                {formatDistance(new Date(article.updatedAt), new Date(), { addSuffix: true })}
+                {article.updatedAt ? formatDistance(new Date(article.updatedAt), new Date(), { addSuffix: true }) : 'N/A'}
               </TableCell>
               <TableCell>
                 <div className="flex space-x-2">
@@ -58,7 +58,7 @@ const ArticleTable: FC<ArticleTableProps> = ({ articles, onEdit, onDelete }) => 
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => onDelete(article._id)}
+                    onClick={() => onDelete(article.id!)}
                   >
                     <Trash2 className="h-4 w-4 text-red-500" />
                   </Button>

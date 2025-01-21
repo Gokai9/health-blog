@@ -1,13 +1,3 @@
-// types/index.ts
-// export interface Article {
-//     _id?: string;
-//     title: string;
-//     content: string;
-//     status: 'draft' | 'published';
-//     metadata: ArticleMetadata;
-//     createdAt?: Date;
-//     updatedAt?: Date;
-//   }
   
   export interface ArticleMetadata {
     id: string;
@@ -32,7 +22,7 @@
   export interface GenerateArticleResponse {
     title: string;
     content: string;
-    metadata: ArticleMetadata;
+    categories: string[];
   }
 
 // types/index.ts
@@ -42,6 +32,7 @@ export interface Article {
   id?: string;
   title: string;
   content: string;
+  images: string[];
   status: 'draft' | 'published';
   slug: string;
   author: string;
@@ -76,3 +67,9 @@ export interface DashboardStats {
   publishedArticles: number;
   draftArticles: number;
 } 
+
+export interface SidebarItem {
+  name: string;
+  href: string;
+  icon: React.ComponentType<{ className?: string }>;
+}

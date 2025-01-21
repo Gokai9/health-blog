@@ -1,9 +1,10 @@
 // app/api/articles/route.ts
 import { db } from '@/db';
-import { articlesSchema, type NewArticle } from '@/db/schema';
+import { articlesSchema } from '@/db/schema';
 import { NextResponse } from 'next/server';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]/route';
+import { auth } from '../../../auth';
+import { Article } from '@/types';
+
 
 
 export async function GET() {
@@ -17,15 +18,21 @@ export async function GET() {
 
 export async function POST(request: Request) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    const session = await auth()
+  
+    if (!session || session.user.role !== "admin") {
+      return new Response("Unauthorized", { status: 401 })
+  }
+    // const session = await getServerSession(authOptions);
+    // if (!session) {
+    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // }
 
     const data = await request.json();
-    const newArticle: NewArticle = {
+    const newArticle: Article = {
       ...data,
-      authorId: session.user.id,
+      slug: data.title.toLowerCase().replace(/\s+/g, '-'),
+      author: "admin",
       createdAt: new Date(),
       updatedAt: new Date(),
     };

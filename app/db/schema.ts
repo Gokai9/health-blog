@@ -1,17 +1,4 @@
 // lib/schema.ts
-// import { pgTable, text, timestamp, uuid } from 'drizzle-orm/pg-core';
-
-// export const users = pgTable('users', {
-//   id: uuid('id').defaultRandom().primaryKey(),
-//   email: text('email').notNull().unique(),
-//   password: text('password').notNull(),
-//   name: text('name').notNull(),
-//   role: text('role').$type<'admin'>().notNull(),
-//   createdAt: timestamp('created_at').defaultNow().notNull(),
-//   updatedAt: timestamp('updated_at').defaultNow().notNull(),
-// });
-
-// lib/schema.ts
 import { pgTable, text, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 import { type InferSelectModel } from 'drizzle-orm';
 
@@ -32,6 +19,7 @@ export const articlesSchema = pgTable("articles", {
   id: uuid("id").defaultRandom().primaryKey(),
   //metadataId: uuid("metadata_id").references(() => articleMetadata.id),
   title: text("title").notNull(),
+  images: text("images").array().notNull(),
   content: text("content").notNull(),
   status: text("status").$type<"draft" | "published">().notNull(),
   slug: text("slug").notNull().unique(),

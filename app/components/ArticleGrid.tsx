@@ -1,5 +1,6 @@
 import { ArrowRight } from "lucide-react";
 import ArticleCard from "./ArticleCard";
+import Link from "next/link";
 
 const articles = [
   {
@@ -37,10 +38,10 @@ const ArticleGrid = () => (
     <div>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Latest Articles</h2>
-        <a href="/articles" className="text-emerald-600 font-medium hover:text-emerald-700 flex items-center gap-1">
+        <Link href="/articles" className="text-emerald-600 font-medium hover:text-emerald-700 flex items-center gap-1">
           View All
           <ArrowRight className="w-4 h-4" />
-        </a>
+        </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {articles.map((article) => (

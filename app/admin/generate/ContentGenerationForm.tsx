@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, FormEvent, ChangeEvent } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/card';
 import { Input } from '../../components/ui/input';
@@ -60,7 +61,6 @@ export default function ContentGenerationForm() {
           title: data.title,
           content: data.content,
           status: 'draft',
-          metadata: data.metadata
         }),
       });
 

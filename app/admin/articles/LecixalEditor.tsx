@@ -1,6 +1,8 @@
 // app/admin/articles/LexicalEditor.tsx
-import { FC, useEffect, useState } from 'react';
+'use client'
+import { FC, useState } from 'react';
 import { LexicalComposer } from '@lexical/react/LexicalComposer';
+import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { ContentEditable } from '@lexical/react/LexicalContentEditable';
 import { HistoryPlugin } from '@lexical/react/LexicalHistoryPlugin';
@@ -41,6 +43,7 @@ const editorConfig = {
 const LexicalEditor: FC<LexicalEditorProps> = ({ article, onSave, onCancel }) => {
   const [title, setTitle] = useState<string>(article?.title || '');
   const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [editor] = useLexicalComposerContext();
 
   const handleSave = async (editorState: EditorState) => {
     setIsSaving(true);
@@ -81,6 +84,12 @@ const LexicalEditor: FC<LexicalEditorProps> = ({ article, onSave, onCancel }) =>
                     Start writing your article...
                   </div>
                 }
+                ErrorBoundary={({ children }) => (
+                  <div className="p-4 text-red-500">
+                    <p>Something went wrong:</p>
+                    {children}
+                  </div>
+                )}
               />
               <HistoryPlugin />
               <AutoFocusPlugin />
@@ -93,6 +102,7 @@ const LexicalEditor: FC<LexicalEditorProps> = ({ article, onSave, onCancel }) =>
             </Button>
             <Button 
               onClick={() => {
+                
                 const editorState = editor.getEditorState();
                 handleSave(editorState);
               }}

@@ -1,8 +1,9 @@
 // app/admin/components/Sidebar.tsx
+'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { FileText, PenTool, BarChart2 } from 'lucide-react';
-import { SidebarItem } from '../../types/dbtypes';
+import { SidebarItem } from '../../types';
 import { JSX } from 'react';
 
 export default function Sidebar(): JSX.Element {

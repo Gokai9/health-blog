@@ -1,9 +1,8 @@
 // app/api/generate/route.ts
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import { getServerSession } from 'next-auth/next';
 import { NextResponse } from 'next/server';
-import { authOptions } from '../auth/[...nextauth]/route';
 import { GenerateArticleRequest, GenerateArticleResponse } from '../../types';
+import { auth } from '../../../auth';
 
 // Initialize Gemini API
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
@@ -11,10 +10,15 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 export async function POST(request: Request) {
   try {
     // Check authentication
-    const session = await getServerSession(authOptions);
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    }
+    // const session = await getServerSession(authOptions);
+    // if (!session) {
+    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    // }
+    const session = await auth()
+  
+    if (!session || session.user.role !== "admin") {
+      return new Response("Unauthorized", { status: 401 })
+  }
 
     const { 
       topic, 
@@ -48,18 +52,22 @@ export async function POST(request: Request) {
 
     // Parse the generated content
     const [title, ...content] = text.split('\n').filter(Boolean);
-    
     const responseData: GenerateArticleResponse = {
       title: title.replace('#', '').trim(),
       content: content.join('\n'),
-      metadata: {
-        topic,
-        keywords,
-        tone,
-        wordCount,
-        generatedAt: new Date().toISOString()
-      }
+      categories: ['health']
     };
+    // const responseData: GenerateArticleResponse = {
+    //   title: title.replace('#', '').trim(),
+    //   content: content.join('\n'),
+    //   metadata: {
+    //     topic,
+    //     keywords,
+    //     tone,
+    //     wordCount,
+    //     generatedAt: new Date().toISOString()
+    //   }
+    // };
 
     return NextResponse.json(responseData);
   } catch (error) {
