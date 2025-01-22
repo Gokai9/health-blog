@@ -1,22 +1,22 @@
-import React from 'react';
 import { ArrowRight } from 'lucide-react';
+import { db } from '@/db';
+import { articlesSchema } from '@/db/schema';
+import { Article } from '@/types';
 
-// Sample article data
-const articles = [
-  {
-    id: 1,
-    title: 'The Impact of Mediterranean Diet on Longevity',
-    excerpt: 'Discover how adopting a Mediterranean diet can significantly improve your health and increase life expectancy...',
-    image: '/api/placeholder/800/400',
-    category: 'Nutrition',
-    date: '2025-01-10',
-  },
-  // ... more articles
-];
+// src={featuredArticle.image}
+//         alt={featuredArticle.title}
+//         layout="fill"
+//         objectFit="cover"
+//         className="absolute inset-0"
 
-const HeroSection = () => {
-  const featuredArticle = articles[0];
-
+const HeroSection = async () => {
+  // const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/articles`);
+  // const articles: Article[] = await response.json();
+  // const featuredArticle = articles[0];
+  const articles: Article[] = await db.select().from(articlesSchema).limit(1).execute();
+  const featuredArticle: Article = articles[0];
+  console.log(featuredArticle)
+  console.log('hello')
   return (
     <div className="relative h-96 rounded-xl overflow-hidden mb-12">
       <img
@@ -27,10 +27,10 @@ const HeroSection = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
       <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
         <span className="inline-block px-3 py-1 bg-emerald-500 rounded-full text-sm font-medium mb-3">
-          {featuredArticle.category}
+          {featuredArticle.categories[0]}
         </span>
         <h1 className="text-3xl md:text-4xl font-bold mb-3">{featuredArticle.title}</h1>
-        <p className="text-lg mb-4 text-gray-200">{featuredArticle.excerpt}</p>
+        <p className="text-lg mb-4 text-gray-200">{featuredArticle.content}</p>
         <button className="flex items-center gap-2 bg-white text-gray-900 px-6 py-2 rounded-lg font-medium hover:bg-gray-100 transition-colors">
           Read More
           <ArrowRight className="w-4 h-4" />

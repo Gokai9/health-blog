@@ -10,6 +10,7 @@ import { Article } from '@/types';
 export async function GET() {
   try {
     const allArticles = await db.select().from(articlesSchema);
+    console.log('Debug Data',allArticles)
     return NextResponse.json(allArticles);
   } catch (error) {
     return NextResponse.json({ error: (error as Error).message }, { status: 500 });

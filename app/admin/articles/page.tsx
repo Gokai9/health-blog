@@ -1,4 +1,5 @@
 // app/admin/articles/page.tsx
+
 import { Suspense } from 'react';
 import { db } from '../../db';
 import ArticleTable from './ArticleTable';

@@ -19,7 +19,7 @@ export const articlesSchema = pgTable("articles", {
   id: uuid("id").defaultRandom().primaryKey(),
   //metadataId: uuid("metadata_id").references(() => articleMetadata.id),
   title: text("title").notNull(),
-  images: text("images").array().notNull(),
+  image: text("image").notNull(),
   content: text("content").notNull(),
   status: text("status").$type<"draft" | "published">().notNull(),
   slug: text("slug").notNull().unique(),

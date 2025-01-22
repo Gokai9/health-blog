@@ -32,7 +32,7 @@ export interface Article {
   id?: string;
   title: string;
   content: string;
-  images: string[];
+  image: string;
   status: 'draft' | 'published';
   slug: string;
   author: string;

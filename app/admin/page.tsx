@@ -11,7 +11,11 @@ async function getStats(): Promise<DashboardStats> {
   const totalArticles = article.length;
   const publishedArticles = article.filter((article: Article) => article.status === 'published').length;
   const draftArticles = article.filter((article: Article) => article.status === 'draft').length;
-  
+  // const [totalArticles, publishedArticles, draftArticles] = await Promise.all([
+  //   db.select().from(articlesSchema).execute(),
+  //   db.select().from(articlesSchema).where(eq(articlesSchema.status, 'published')).execute(),
+  //   db.select().from(articlesSchema).where(eq(articlesSchema.status, 'draft')).execute(),
+  // ]);
   return {
     totalArticles,
     publishedArticles,
