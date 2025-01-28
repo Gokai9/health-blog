@@ -1,4 +1,5 @@
 // app/admin/articles/ArticleTable.tsx
+'use client'
 import { FC } from 'react';
 import {
   Table,

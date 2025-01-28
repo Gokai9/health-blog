@@ -1,9 +1,8 @@
 // app/admin/layout.tsx
 //import { Inter } from 'next/font/google';
 import Sidebar from '../components/admin/Sidebar';
-// import { getServerSession } from 'next-auth/next';
-// import { redirect } from 'next/navigation';
-// import { authOptions } from '../api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import { auth } from '../../auth';
 
 //const inter = Inter({ subsets: ['latin'] });
 
@@ -12,11 +11,11 @@ interface AdminLayoutProps {
 }
 
 export default async function AdminLayout({ children }: AdminLayoutProps) {
-  // const session = await getServerSession(authOptions);
+  const session = await auth()
   
-  // if (!session) {
-  //   redirect('/api/auth/signin');
-  // }
+  if (!session || session.user.role !== "admin") {
+    redirect('/api/auth/signin');
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">

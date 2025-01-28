@@ -1,12 +1,14 @@
 // app/admin/articles/page.tsx
 
-import { Suspense } from 'react';
+//import { Suspense } from 'react';
 import { db } from '../../db';
-import ArticleTable from './ArticleTable';
-import { Button } from '../../components/ui/button';
+//import ArticleTable from './ArticleTable';
+//import { Button } from '../../components/ui/button';
 import { Plus } from 'lucide-react';
 import { Article } from '@/types';
 import { articlesSchema } from '../../db/schema';
+import Link from 'next/link';
+import Articles from './Articles';
 
 /**
  * Fetches a list of articles from the database, sorts them by their updated date in descending order,
@@ -26,25 +28,14 @@ export default async function ArticlesPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-bold">Articles</h1>
-        <Button onClick={() => window.location.href = '/admin/generate'}>
+       
+          <Link href={'/admin/generate'}>
           <Plus className="mr-2 h-4 w-4" /> New Article
-        </Button>
+          </Link>
+        
       </div>
       
-      <Suspense fallback={<div>Loading articles...</div>}>
-        <ArticleTable 
-          articles={articles}
-          onEdit={(article) => {
-            window.location.href = `/admin/articles/${article.id}/edit`;
-          }}
-          onDelete={async (id) => {
-            if (confirm('Are you sure you want to delete this article?')) {
-              await fetch(`/api/articles/${id}`, { method: 'DELETE' });
-              window.location.reload();
-            }
-          }}
-        />
-      </Suspense>
+      <Articles articles={articles} />
     </div>
   );
 }

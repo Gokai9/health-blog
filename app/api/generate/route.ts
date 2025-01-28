@@ -9,11 +9,6 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY as string);
 
 export async function POST(request: Request) {
   try {
-    // Check authentication
-    // const session = await getServerSession(authOptions);
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
     const session = await auth()
   
     if (!session || session.user.role !== "admin") {
@@ -55,7 +50,7 @@ export async function POST(request: Request) {
     const responseData: GenerateArticleResponse = {
       title: title.replace('#', '').trim(),
       content: content.join('\n'),
-      categories: ['health']
+      categories: [topic]
     };
     // const responseData: GenerateArticleResponse = {
     //   title: title.replace('#', '').trim(),

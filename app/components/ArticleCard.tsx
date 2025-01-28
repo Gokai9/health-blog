@@ -1,20 +1,25 @@
+'use client'
 import { Article } from "@/types";
 import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+//import { useRouter } from "next/navigation";
 
-// interface Article {
-//   image: string;
-//   title: string;
-//   category: string;
-//   excerpt: string;
-//   date: string;
-//   slug: string;
-// }
-
-const ArticleCard = ({ article }: { article: Article }) => (
+const ArticleCard = ({ article }: { article: Article }) => {
+  //const router = useRouter();
+  const currentPath = window.location.pathname;
+  let slug = currentPath + '/' + article.slug
+  if (currentPath !== "/articles") {
+    slug = "/articles/" + article.slug
+  }
+  
+  return (
     <article className="flex flex-col rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-      <img
+      <Image
         src={article.image}
         alt={article.title}
+        width={800}
+        height={400}
         className="w-full h-48 object-cover"
       />
       <div className="p-6 flex-grow">
@@ -24,12 +29,14 @@ const ArticleCard = ({ article }: { article: Article }) => (
         <div className="flex justify-between items-center mt-auto">
           <span className="text-sm text-gray-500">{article.createdAt?.toLocaleDateString()}</span>
           <button className="text-emerald-600 font-medium hover:text-emerald-700 flex items-center gap-1">
+            <Link href={slug}>
             Read More
             <ArrowRight className="w-4 h-4" />
+            </Link>
           </button>
         </div>
       </div>
     </article>
-  );
+  )};
 
   export default ArticleCard;

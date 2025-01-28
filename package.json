@@ -3,15 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_OPTIONS='--inspect' next dev --turbopack",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "setup-admin": "ts-node --project tsconfig.json scripts/setup-admin.ts"
+    "lint": "next lint"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.7.4",
-    "@auth/pg-adapter": "^1.7.4",
     "@google/generative-ai": "^0.21.0",
     "@lexical/react": "^0.23.1",
     "@neondatabase/serverless": "^0.10.4",
@@ -21,14 +19,13 @@
     "@types/next-auth": "^3.13.0",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.38.3",
     "lexical": "^0.23.1",
     "lucide-react": "^0.471.1",
-    "mongodb": "^6.12.0",
-    "mongoose": "^8.9.4",
     "next": "15.1.4",
     "next-auth": "^5.0.0-beta.25",
     "postgres": "^3.4.5",
@@ -36,7 +33,6 @@
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "ws": "^8.18.0",
     "zod": "^3.24.1"
   },
   "devDependencies": {
@@ -44,13 +40,11 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@types/ws": "^8.5.13",
     "drizzle-kit": "^0.30.2",
     "eslint": "^9",
     "eslint-config-next": "15.1.4",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

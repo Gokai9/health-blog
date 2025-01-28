@@ -3,6 +3,7 @@ import Head from 'next/head';
 import { articlesSchema } from '@/db/schema';
 import { db } from '@/db';
 import { Article } from '@/types';
+import Image from 'next/image';
 
 
 //const categories = ['All', 'Health', 'Fitness', 'Nutrition'];
@@ -24,7 +25,7 @@ const ArticlePage = async({ params }: { params: { slug: string } }) => {
             <div className="max-w-3xl mx-auto">
                 <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
                 <p className="text-gray-600 mb-4">{article.createdAt?.toLocaleDateString()} by {article.author}</p>
-                <img src={article.image} alt={article.title} className="w-full h-auto mb-4" />
+                <Image src={article.image} alt={article.title} width={800} height={400} className="w-full h-auto mb-4" />
                 <div className="prose prose-lg">
                     <p>{article.content}</p>
                 </div>

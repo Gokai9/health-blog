@@ -24,10 +24,6 @@ export async function POST(request: Request) {
     if (!session || session.user.role !== "admin") {
       return new Response("Unauthorized", { status: 401 })
   }
-    // const session = await getServerSession(authOptions);
-    // if (!session) {
-    //   return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-    // }
 
     const data = await request.json();
     const newArticle: Article = {

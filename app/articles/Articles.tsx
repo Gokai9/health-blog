@@ -1,7 +1,7 @@
 'use client'
 import ArticleCard from "@/components/ArticleCard";
 import { Article } from "@/types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const categories = ['All', 'Health', 'Fitness', 'Nutrition'];

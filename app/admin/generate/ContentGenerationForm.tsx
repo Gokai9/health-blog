@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { AlertCircle, Loader2 } from 'lucide-react';
 import { Alert, AlertDescription } from '../../components/ui/alert';
 import { ArticleTone, GenerateArticleRequest, GenerateArticleResponse } from '../../types';
+import { uploadToCloudinary } from '@/lib/cloudUtils';
 
 interface FormData {
   topic: string;
@@ -29,6 +30,7 @@ export default function ContentGenerationForm() {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [image, setImage] = useState<string | null>(null);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -61,6 +63,8 @@ export default function ContentGenerationForm() {
           title: data.title,
           content: data.content,
           status: 'draft',
+          image: image,
+          categories: data.categories,
         }),
       });
 
@@ -89,7 +93,22 @@ export default function ContentGenerationForm() {
       tone: value
     }));
   };
+const handleImageUpload = async (e: ChangeEvent<HTMLInputElement>) => {
+  const files = e.target.files;
+  if (!files || files.length === 0) {
+    console.error('No file selected');
+    return;
+  }
+  const file = files[0];
+  const { url, error } = await uploadToCloudinary(file);
 
+  if (error) {
+    console.error('Upload failed:', error);
+  } else {
+    console.log('Upload successful:', url);
+    setImage(url);
+  }
+};
   return (
     <Card className="w-full max-w-3xl mx-auto">
       <CardHeader>
@@ -107,7 +126,14 @@ export default function ContentGenerationForm() {
               onChange={handleInputChange}
             />
           </div>
-
+          <div>
+            <label className="text-sm font-medium">Upload Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+            />
+          </div>
           <div className="space-y-2">
             <label className="text-sm font-medium">Keywords (comma-separated)</label>
             <Input
